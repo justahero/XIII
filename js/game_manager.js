@@ -38,6 +38,7 @@ GameManager.prototype.setup = function () {
   this.grid        = new Grid(this.size);
 
   this.score       = 0;
+  this.moves       = 0;
   this.over        = false;
   this.won         = false;
   this.keepPlaying = false;
@@ -74,6 +75,7 @@ GameManager.prototype.actuate = function () {
 
   this.actuator.actuate(this.grid, {
     score:      this.score,
+    moves:      this.moves,
     over:       this.over,
     won:        this.won,
     bestScore:  this.scoreManager.get(),
@@ -153,6 +155,7 @@ GameManager.prototype.move = function (direction) {
   });
 
   if (moved) {
+    self.moves += 1;
     this.addRandomTile();
 
     if (!this.movesAvailable()) {
