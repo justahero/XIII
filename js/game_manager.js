@@ -1,5 +1,6 @@
-function GameManager(size, InputManager, Actuator, ScoreManager) {
-  this.size         = size; // Size of the grid
+function GameManager(width, height, InputManager, Actuator, ScoreManager) {
+  this.grid_width   = width;
+  this.grid_height  = height;
   this.inputManager = new InputManager;
   this.scoreManager = new ScoreManager;
   this.actuator     = new Actuator;
@@ -35,7 +36,7 @@ GameManager.prototype.isGameTerminated = function () {
 
 // Set up the game
 GameManager.prototype.setup = function () {
-  this.grid        = new Grid(this.size);
+  this.grid        = new Grid(this.grid_width, this.grid_height);
 
   this.score       = 0;
   this.moves       = 0;
@@ -183,7 +184,7 @@ GameManager.prototype.getVector = function (direction) {
 GameManager.prototype.buildTraversals = function (vector) {
   var traversals = { x: [], y: [] };
 
-  for (var pos = 0; pos < this.size; pos++) {
+  for (var pos = 0; pos < this.grid_width; pos++) {
     traversals.x.push(pos);
     traversals.y.push(pos);
   }
@@ -221,8 +222,8 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
   var tile;
 
-  for (var x = 0; x < this.size; x++) {
-    for (var y = 0; y < this.size; y++) {
+  for (var x = 0; x < this.grid_width; x++) {
+    for (var y = 0; y < this.grid_height; y++) {
       tile = this.grid.cellContent({ x: x, y: y });
 
       if (tile) {
