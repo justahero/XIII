@@ -132,12 +132,16 @@ GameManager.prototype.move = function (direction) {
       cell = { x: x, y: y };
       tile = self.grid.cellContent(cell);
 
+      if (tile && !tile.isFree()) {
+        return;
+      }
+
       if (tile) {
         var positions = self.findFarthestPosition(cell, vector);
         var next      = self.grid.cellContent(positions.next);
 
         // Only one merger per row traversal?
-        if (next && next.value === tile.value && !next.mergedFrom) {
+        if (next && next.value === tile.value && !next.mergedFrom && next.isFree()) {
           var merged = new Tile(positions.next, tile.value * 2);
           merged.mergedFrom = [tile, next];
 
@@ -153,6 +157,7 @@ GameManager.prototype.move = function (direction) {
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
         } else {
+          // TODO should not move it is a block
           self.moveTile(tile, positions.farthest);
         }
 
@@ -220,6 +225,13 @@ GameManager.prototype.findFarthestPosition = function (cell, vector) {
   };
 };
 
+GameManager.prototype.isFree = function (cell) {
+  if (this.grid.cellContent(cell)) {
+    return this.grid.cellContent(cell).isFree();
+  }
+  return true;
+}
+
 GameManager.prototype.movesAvailable = function () {
   return this.grid.cellsAvailable() || this.tileMatchesAvailable();
 };
@@ -234,7 +246,7 @@ GameManager.prototype.tileMatchesAvailable = function () {
     for (var y = 0; y < this.grid_height; y++) {
       tile = this.grid.cellContent({ x: x, y: y });
 
-      if (tile) {
+      if (tile && tile.isFree()) {
         for (var direction = 0; direction < 4; direction++) {
           var vector = self.getVector(direction);
           var cell   = { x: x + vector.x, y: y + vector.y };
