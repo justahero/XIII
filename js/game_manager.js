@@ -44,11 +44,19 @@ GameManager.prototype.setup = function () {
   this.won         = false;
   this.keepPlaying = false;
 
+  // Set blocks that cannot move or get merged
+  // this.addBlockTiles();
+
   // Add the initial tiles
   this.addStartTiles();
 
   // Update the actuator
   this.actuate();
+};
+
+GameManager.prototype.addBlockTiles = function () {
+  this.grid.cells[2][2] = new Tile({x: 2, y: 2}, 0);
+  this.grid.cells[2][2].setAsBlock();
 };
 
 // Set up the initial tiles to start the game with
@@ -88,7 +96,7 @@ GameManager.prototype.actuate = function () {
 // Save all tile positions and remove merger info
 GameManager.prototype.prepareTiles = function () {
   this.grid.eachCell(function (x, y, tile) {
-    if (tile) {
+    if (tile && tile.isFree()) {
       tile.mergedFrom = null;
       tile.savePosition();
     }
@@ -233,7 +241,8 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
           var other  = self.grid.cellContent(cell);
 
-          if (other && other.value === tile.value) {
+          // TODO avoid merges with blocks
+          if (other && other.isFree() && other.value === tile.value) {
             return true; // These two tiles can be merged
           }
         }

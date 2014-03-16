@@ -2,6 +2,7 @@ function Tile(position, value) {
   this.x                = position.x;
   this.y                = position.y;
   this.value            = value || 2;
+  this.type             = 0;
 
   this.previousPosition = null;
   this.mergedFrom       = null; // Tracks tiles that merged together
@@ -36,4 +37,12 @@ Tile.prototype.savePosition = function () {
 Tile.prototype.updatePosition = function (position) {
   this.x = position.x;
   this.y = position.y;
+};
+
+Tile.prototype.setAsBlock = function () {
+  this.type = 1;
+};
+
+Tile.prototype.isFree = function() {
+  return this.type === 0;
 };
