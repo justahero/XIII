@@ -43,6 +43,10 @@ Tile.prototype.updatePosition = function (position) {
   this.y = position.y;
 };
 
-Tile.prototype.isFree = function () {
-  this.type === 0;
+Tile.prototype.setAsBlock = function () {
+  this.type = 1;
+};
+
+Tile.prototype.isFree = function() {
+  return this.type === 0;
 };
