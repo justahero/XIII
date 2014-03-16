@@ -61,11 +61,16 @@ HTMLActuator.prototype.addTile = function (tile) {
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
   if (tile.value > 2048) classes.push("tile-super");
-  if (!tile.isFree()) classes.push("tile-block");
 
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
+  if (tile.isFree()) {
+    inner.classList.add("tile-inner-free");
+  } else {
+    inner.classList.add("tile-inner-block");
+  }
+
   // inner.textContent = tile.value;
   inner.textContent = tile.romanNumeral();
 
