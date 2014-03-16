@@ -24,6 +24,9 @@ Tile.prototype.romanNumeral = function() {
   numeralsMaps["1024"] = 'X';
   numeralsMaps["2048"] = 'XI';
 
+  if (this.type !== 0) {
+    return "";
+  }
   if (numeralsMaps.hasOwnProperty) {
     return numeralsMaps[key];
   }

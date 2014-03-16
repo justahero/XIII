@@ -132,11 +132,7 @@ GameManager.prototype.move = function (direction) {
       cell = { x: x, y: y };
       tile = self.grid.cellContent(cell);
 
-      if (tile && !tile.isFree()) {
-        return;
-      }
-
-      if (tile) {
+      if (tile && tile.isFree()) {
         var positions = self.findFarthestPosition(cell, vector);
         var next      = self.grid.cellContent(positions.next);
 
@@ -157,7 +153,6 @@ GameManager.prototype.move = function (direction) {
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
         } else {
-          // TODO should not move it is a block
           self.moveTile(tile, positions.farthest);
         }
 
