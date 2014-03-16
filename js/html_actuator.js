@@ -61,6 +61,7 @@ HTMLActuator.prototype.addTile = function (tile) {
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
   if (tile.value > 2048) classes.push("tile-super");
+  if (!tile.isFree()) classes.push("tile-block");
 
   this.applyClasses(wrapper, classes);
 

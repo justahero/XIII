@@ -55,8 +55,14 @@ GameManager.prototype.setup = function () {
 };
 
 GameManager.prototype.addBlockTiles = function () {
-  this.grid.cells[2][2] = new Tile({x: 2, y: 2}, 0);
-  this.grid.cells[2][2].setAsBlock();
+  this.addBlockTile(0, 0);
+  this.addBlockTile(2, 2);
+  this.addBlockTile(4, 4);
+};
+
+GameManager.prototype.addBlockTile = function (posx, posy) {
+  this.grid.cells[posx][posy] = new Tile({x: posx, y: posy});
+  this.grid.cells[posx][posy].setAsBlock();
 };
 
 // Set up the initial tiles to start the game with

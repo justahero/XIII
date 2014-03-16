@@ -426,7 +426,7 @@ hr {
 }
 
 .tile-new .tile-inner {
-  @include animation(appear 200ms ease $transition-speed);
+  // @include animation(appear 200ms ease $transition-speed);
   @include animation-fill-mode(backwards);
 }
 
