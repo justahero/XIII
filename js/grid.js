@@ -83,3 +83,8 @@ Grid.prototype.withinBounds = function (position) {
   return position.x >= 0 && position.x < this.width &&
          position.y >= 0 && position.y < this.height;
 };
+
+Grid.prototype.isFree = function (tile) {
+  cell = this.cells[tile.x][tile.y];
+  return (cell ? cell.isFree() : true);
+}

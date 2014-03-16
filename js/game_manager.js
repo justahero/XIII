@@ -45,7 +45,7 @@ GameManager.prototype.setup = function () {
   this.keepPlaying = false;
 
   // Set blocks that cannot move or get merged
-  // this.addBlockTiles();
+  this.addBlockTiles();
 
   // Add the initial tiles
   this.addStartTiles();
@@ -241,7 +241,6 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
           var other  = self.grid.cellContent(cell);
 
-          // TODO avoid merges with blocks
           if (other && other.isFree() && other.value === tile.value) {
             return true; // These two tiles can be merged
           }
