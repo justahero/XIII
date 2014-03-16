@@ -44,12 +44,20 @@ GameManager.prototype.setup = function () {
   this.won         = false;
   this.keepPlaying = false;
 
+  // set initial blocks
+  this.setInitialBlocks();
+
   // Add the initial tiles
   this.addStartTiles();
 
   // Update the actuator
   this.actuate();
 };
+
+GameManager.prototype.setInitialBlocks = function () {
+  this.grid.cells[2][2] = new Tile({x: 2, y: 2}, 0);
+  this.grid.cells[2][2].setAsBlock();
+}
 
 // Set up the initial tiles to start the game with
 GameManager.prototype.addStartTiles = function () {
@@ -88,7 +96,7 @@ GameManager.prototype.actuate = function () {
 // Save all tile positions and remove merger info
 GameManager.prototype.prepareTiles = function () {
   this.grid.eachCell(function (x, y, tile) {
-    if (tile) {
+    if (tile && tile.isFree()) {
       tile.mergedFrom = null;
       tile.savePosition();
     }

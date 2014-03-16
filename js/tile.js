@@ -2,10 +2,11 @@ function Tile(position, value) {
   this.x                = position.x;
   this.y                = position.y;
   this.value            = value || 2;
+  this.type             = 0;
 
   this.previousPosition = null;
   this.mergedFrom       = null; // Tracks tiles that merged together
-}
+};
 
 Tile.prototype.romanNumeral = function() {
   // map value to roman numeral from value
@@ -27,7 +28,11 @@ Tile.prototype.romanNumeral = function() {
     return numeralsMaps[key];
   }
   return key;
-}
+};
+
+Tile.prototype.setAsBlock = function () {
+  this.type = 1;
+};
 
 Tile.prototype.savePosition = function () {
   this.previousPosition = { x: this.x, y: this.y };
@@ -36,4 +41,8 @@ Tile.prototype.savePosition = function () {
 Tile.prototype.updatePosition = function (position) {
   this.x = position.x;
   this.y = position.y;
+};
+
+Tile.prototype.isFree = function () {
+  this.type === 0;
 };
